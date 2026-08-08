@@ -1,0 +1,13 @@
+body {
+  background-color: #f3f4f6;
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+}
+
+.table {
+  border-radius: 10px;
+  overflow: hidden;
+}

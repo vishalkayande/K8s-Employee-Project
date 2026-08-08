@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row mb-4 g-3">
+  <div class="col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <div class="text-muted small">Total Employees</div>
+        <div class="fs-3 fw-bold">{{ employees|length }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <div class="text-muted small">Page Views (Redis counter)</div>
+        <div class="fs-3 fw-bold">{{ views }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <div class="text-muted small">Data Source</div>
+        <div class="fs-5 fw-bold">
+          {% if cache_hit %}
+            <span class="badge bg-warning text-dark">⚡ Redis Cache</span>
+          {% else %}
+            <span class="badge bg-primary">🗄️ MySQL (fresh)</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <div class="text-muted small">Served by Pod</div>
+        <div class="fs-6 fw-bold text-truncate" title="{{ pod_name }}">{{ pod_name }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="mb-0">Employees</h4>
+  <a href="{{ url_for('add_employee') }}" class="btn btn-primary">+ Add Employee</a>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-hover align-middle bg-white shadow-sm">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Department</th>
+        <th>Salary</th>
+        <th>Added</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in employees %}
+      <tr>
+        <td>{{ e.id }}</td>
+        <td>{{ e.name }}</td>
+        <td>{{ e.email }}</td>
+        <td><span class="badge bg-light text-dark border">{{ e.department }}</span></td>
+        <td>${{ e.salary }}</td>
+        <td class="text-muted small">{{ e.created_at }}</td>
+        <td class="text-end">
+          <form method="post" action="{{ url_for('delete_employee', emp_id=e.id) }}" onsubmit="return confirm('Delete this employee?');">
+            <button class="btn btn-sm btn-outline-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7" class="text-center text-muted py-4">No employees yet. Add the first one!</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<p class="text-muted small">
+  Note: the list you're viewing is cached in Redis for a short window, so
+  rapid refreshes will show "Redis Cache" until the cache expires or a
+  write invalidates it.
+</p>
+
+{% endblock %}
