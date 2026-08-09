@@ -19,15 +19,15 @@ The project demonstrates a practical multi-tier Kubernetes architecture using De
                                  │
                                  ▼
                  ┌──────────────────────────────┐
-                 │     employee-app Deployment   │
-                 │                                │
-                 │      Flask + Gunicorn          │
-                 │         2 Replicas             │
-                 └─────────────┬───────┬──────────┘
+                 │    employee-app Deployment   │
+                 │                              │
+                 │      Flask + Gunicorn        │
+                 │         2 Replicas           │
+                 └─────────────┬───────┬────────┘
                                │       │
                     ┌──────────▼───┐ ┌─▼────────────┐
-                    │ MySQL Service│ │ Redis Service │
-                    └───────┬──────┘ └──────┬────────┘
+                    │ MySQL Service│ │ Redis Service│
+                    └───────┬──────┘ └──────┬───────┘
                             │               │
                     ┌───────▼──────┐ ┌─────▼──────┐
                     │    MySQL     │ │    Redis   │
@@ -92,18 +92,18 @@ Flask Application
 
 ## Technology Stack
 
-| Component            | Technology            |
-|-----------------------|------------------------|
-| Application           | Python / Flask         |
-| Application Server    | Gunicorn                |
-| Containerization       | Docker                  |
-| Orchestration          | Kubernetes               |
-| Database                | MySQL                     |
-| Cache                    | Redis                       |
-| Storage                  | PersistentVolumeClaim         |
-| Configuration             | ConfigMap                       |
-| Credentials                | Kubernetes Secret                 |
-| Cluster Environment          | Killercoda Kubernetes               |
+| Component             | Technology            |
+|-----------------------|-----------------------|
+| Application           | Python / Flask        |
+| Application Server    | Gunicorn              |
+| Containerization      | Docker                |
+| Orchestration         | Kubernetes            |
+| Database              | MySQL                 |
+| Cache                 | Redis                 |
+| Storage               | PersistentVolumeClaim |
+| Configuration         | ConfigMap             |
+| Credentials           | Kubernetes Secret     |
+| Cluster Environment   | Killercoda Kubernetes |
 
 ---
 
@@ -147,7 +147,6 @@ The project requires:
 - A working Kubernetes cluster
 - A container registry accessible by the Kubernetes cluster
 
-The project is deployed using the Kubernetes environment provided by [Killercoda](https://killercoda.com/).
 
 ### 1. Build the Application Image
 
@@ -282,18 +281,18 @@ Because the manifests are numbered, they are applied in the intended dependency 
 
 ## Kubernetes Resources
 
-| Resource               | Purpose                                |
-|--------------------------|------------------------------------------|
-| Namespace                  | Isolates project resources                 |
-| Deployment                   | Manages Flask, MySQL, and Redis pods         |
-| Service                        | Provides stable networking                     |
-| ConfigMap                        | Stores non-sensitive configuration                |
-| Secret                             | Stores database credentials                          |
-| PersistentVolumeClaim                 | Provides persistent MySQL storage                        |
-| Init Container                          | Waits for required dependencies                             |
-| Liveness Probe                            | Checks application health                                      |
-| Readiness Probe                             | Checks backend availability                                       |
-| NodePort                                      | Exposes the application                                              |
+| Resource               | Purpose                               |
+|------------------------|---------------------------------------|
+| Namespace              | Isolates project resources            |
+| Deployment             | Manages Flask, MySQL, and Redis pods  |
+| Service                | Provides stable networking            |
+| ConfigMap              | Stores non-sensitive configuration    |
+| Secret                 | Stores database credentials           |
+| PersistentVolumeClaim  | Provides persistent MySQL storage     |
+| Init Container         | Waits for required dependencies       |
+| Liveness Probe         | Checks application health             |
+| Readiness Probe        | Checks backend availability           |
+| NodePort               | Exposes the application               |
 
 ---
 
